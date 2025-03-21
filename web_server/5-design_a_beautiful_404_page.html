@@ -6,95 +6,65 @@
     <title>404 - Page Not Found</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: white;
-            color: black;
-        }
-
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 600px;
-        }
-
-        .error-code {
-            font-size: 120px;
-            font-weight: bold;
+            justify-content: center;
+            height: 100vh;
             margin: 0;
-            line-height: 1;
-            position: relative;
-            animation: glitch 1s infinite;
+            text-align: center;
         }
-
-        .message {
-            font-size: 24px;
-            margin: 1rem 0;
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        .description {
-            font-size: 16px;
-            margin: 1rem 0;
-            color: #666;
+        h1 {
+            font-size: 2em;
+            color: #e74c3c;
         }
-
-        .home-link {
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .ascii-art {
+            color: #888;
+            font-family: monospace;
+            margin: 20px 0;
+        }
+        .link {
             display: inline-block;
-            margin-top: 2rem;
-            padding: 12px 24px;
-            background-color: black;
-            color: white;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #3498db;
             text-decoration: none;
-            border-radius: 4px;
-            transition: transform 0.2s;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-
-        .home-link:hover {
-            transform: translateY(-2px);
-        }
-
-        @keyframes glitch {
-            0% {
-                transform: translate(0);
-            }
-            20% {
-                transform: translate(-2px, 2px);
-            }
-            40% {
-                transform: translate(-2px, -2px);
-            }
-            60% {
-                transform: translate(2px, 2px);
-            }
-            80% {
-                transform: translate(2px, -2px);
-            }
-            100% {
-                transform: translate(0);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .error-code {
-                font-size: 80px;
-            }
-            .message {
-                font-size: 20px;
-            }
+        .link:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
+Ceci n'est pas une pageCeci n'est pas une page
     <div class="container">
-        <h1 class="error-code">404</h1>
-        <h2 class="message">Page Not Found</h2>
-        <p class="description">The page you're looking for seems not to exist.</p>
-        <a href="/" class="home-link">Return Home</a>
+        <h1>Oops! 404 Error</h1>
+        <p>Looks like you've wandered off the map...</p>
+        <div class="ascii-art">
+		<img src="stroll-wandering.gif" alt="Wandering off the map" width="200" height="200">
+        </div>
+        <p>But don’t worry! We’ll get you back on track. Here’s a way out:</p>
+        <a class="link" href="/">Take me Home</a>
     </div>
+
 </body>
 </html>
+ 

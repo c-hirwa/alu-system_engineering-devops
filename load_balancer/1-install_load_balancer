@@ -1,55 +1,28 @@
 #!/usr/bin/env bash
-# Script to install and configure HAProxy as a load balancer for web-01 and web-02
+#Updates the current state of the server
+#Installs haproxy on the server
 
-# Update and install required packages
-apt-get update -y
-apt-get install -y haproxy
+sudo apt-get update -y
+sudo apt install haproxy -y
 
-# Enable HAProxy
-echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+#new configuration
+new_haproxy_config=\
+"
+frontend http_frontend
+	bind *:80
+	default_backend http_backend
+backend http_backend
+	balance roundrobin
+	server 6351-web-01 3.88.209.239:80
+	server 6351-web-02 54.242.196.113:80
+"
+#backing the original config file
+sudo cp /etc/haproxy/haproxy.cfg etc/haproxy/haproxy.cfg.backup
 
-# Backup existing HAProxy config
-cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+#appending it to the config file
+echo "$new_haproxy_config" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
 
-# Get hostname prefix (student ID)
-STUDENT_ID=$(hostname | cut -d '-' -f1)
+#restart haproxy 
+sudo service haproxy restart
 
-# Configure HAProxy
-cat > /etc/haproxy/haproxy.cfg << EOF
-global
-    log /dev/log local0
-    log /dev/log local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660 level admin
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
-
-defaults
-    log global
-    mode http
-    option httplog
-    option dontlognull
-    timeout connect 5000
-    timeout client 50000
-    timeout server 50000
-
-frontend http_front
-    bind *:80
-    default_backend http_back
-
-backend http_back
-    balance roundrobin
-    server ${STUDENT_ID}-web-01 3.89.108.224:80 check
-    server ${STUDENT_ID}-web-02 54.152.78.172:80 check
-EOF
-
-# Restart HAProxy service
-service haproxy restart
-
-# Enable HAProxy to start on boot
-systemctl enable haproxy
-
-# Print configuration info to ensure output contains required strings
-echo "HAProxy configured with servers: ${STUDENT_ID}-web-01 and ${STUDENT_ID}-web-02"
+echo "HAProxy installation and configuration complete. Traffic is now load balanced between web-01 and web-02."
